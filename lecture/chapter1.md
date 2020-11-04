@@ -1,6 +1,6 @@
 # Udemy Docker Course
 
-##Chapter1 Dive Into Docker!
+## Chapter1 Dive Into Docker!
 
 #### What is docker
 
@@ -23,15 +23,15 @@ That's the problem that docker is going to solve, we use docker to make an easy 
 - Docker **Hub**
 - Docker **Compose**
 
--> Docker is a platform or ecosystem to create and run containers.
+> Docker is a platform or ecosystem to create and run containers.
 
 #### Image
 
--> Single file with all dependencies and config required to run a software
+> Single file with all dependencies and config required to run a software
 
 #### Container
 
--> Instance of an image. Runs a program
+> Instance of an image. Runs a program
 
 #### Docker for Windows/Mac
 
