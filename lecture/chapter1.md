@@ -51,26 +51,26 @@ That's the problem that docker is going to solve, we use docker to make an easy 
 docker run hello-world
 ```
 
--> When we run this command in computer by using **Docker Client** after that the command will go to **Docker Server** and check the image (hello-world) in Image Cache in our computer, if there is no image in local computer, it will download image from the **Docker Hub**
+- When we run this command in computer by using **Docker Client** after that the command will go to **Docker Server** and check the image (hello-world) in Image Cache in our computer, if there is no image in local computer, it will download image from the **Docker Hub**
 
 #### Kernel
 
--> kernel is a system that will receive system call from software and control the hardware to do the instructions. For example, Google Chrome create a system call that request to kernel to interact with a piece of hardware.
+- kernel is a system that will receive system call from software and control the hardware to do the instructions. For example, Google Chrome create a system call that request to kernel to interact with a piece of hardware.
 
--> In some situations, If chrome need **python v2** but NodeJS need **python v3**, when it makes system call to read HDD, kernel will determine that which process is making this system call. In Hard Disk, there are **two segments** which is python v2 and v3. 
+- In some situations, If chrome need **python v2** but NodeJS need **python v3**, when it makes system call to read HDD, kernel will determine that which process is making this system call. In Hard Disk, there are **two segments** which is python v2 and v3. 
 
 #### Namespacing
 
--> Namespacing is **isolate resources** per process (or group of process). Such as, Processes, Hard drive, Network, Users, Hostnames, Inter Process Communications. 
+- Namespacing is **isolate resources** per process (or group of process). Such as, Processes, Hard drive, Network, Users, Hostnames, Inter Process Communications. 
 
 #### Control Groups (cgroups)
 
--> Control Groups is limitation of amount of resources used per process. Such as, Memory, CPU Usage, HD I/O, Network Bandwith.
+- Control Groups is limitation of amount of resources used per process. Such as, Memory, CPU Usage, HD I/O, Network Bandwith.
 
-**For example**, when we creat a container and run a software inside it, it can access only resorces inside that container that we allow such as Hard Drive, Network, RAM, CPU (limited resources. When it broken, it broke only inside that container).
+- **For example**, when we creat a container and run a software inside it, it can access only resorces inside that container that we allow such as Hard Drive, Network, RAM, CPU (limited resources. When it broken, it broke only inside that container).
 
 #### Image
 
--> Compose of FS Snapshot Such as, Chrome, Python and Startup Command Such as Run Chrome
+- Compose of FS Snapshot Such as, Chrome, Python and Startup Command Such as Run Chrome
 
-In docker, the running process will go to Linus Kernel and goto Linux Virtial Machine -> MacOS/Windows -> Computer Hardware.
+- In docker, the running process will go to Linus Kernel and goto Linux Virtial Machine -> MacOS/Windows -> Computer Hardware.
