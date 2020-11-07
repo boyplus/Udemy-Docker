@@ -70,7 +70,7 @@ docker start 7bc37f3d74bd733918377
 docker start -a 7bc37f3d74bd733918377
 ```
 
-> We use attribute -a to tell that we want to see the output after we start the container, if we did not use -a, the containers just run but we did not see any output of them.
+> We use attribute -a to tell that we want to see the output after we start the container and container is stopped, if we did not use -a, the containers just run but we did not see any output of them.
 
 ---
 
@@ -120,19 +120,44 @@ In this command, it will deleted all of these
 
 ```dockerfile
 docker logs <container id>
+docker create busybox echo hi there
+docker start 7bc37f3d74bd733918377
+docker logs 7bc37f3d74bd733918377
 ```
+
+-> after we start the container (running process is running in the background), we can see all output from that containers (we did not run container, we just see the logs).
+
+---
 
 #### Stop a container
 
+-> stop command will call **SIGTERM** Message (shutdown the container and give some times to ccontainer to do something that it did not finish yet or things that it has to do after it was shutdown such as emit message). If the container did not shutdown within 10 seconds, docker will call kill command automatically.
+
 ```dockerfile
 docker stop <container id>
+docker stop 7bc37f3d74bd733918377
 ```
 
 #### Kill a container
 
+-> Kill command will cal **SIGKILL** that will kill the container **right now!**
+
 ```dockerfile
 docker kill <container id>
+docker kill 7bc37f3d74bd733918377
 ```
+
+---
+
+#### Redis
+
+```dockerfile
+docker run redis
+```
+
+-> We use redis cli to interact with Redis Server. When we run the redis container and we would like to do something inside that container, we cannot do it directly in our computer bacause it's not inside the redis container. That's why we have to do somethings to type the command inside that container.
+
+---
 
 #### Execute an additional command in a container
 
@@ -144,5 +169,74 @@ docker exec -it <container id> <command>
 - **-it** -> Allow us to provide input to the container
 - **command** -> Command to execute
 
-For example, 
+```dockerfile
+docker run redis
+docker exec -it 2a831abcb38c redis-cli
+set myvalue 5
+get myvalue //5
+```
+
+From this example, we run the redis container and we execute another command inside that container by specify the <container id>. Please note that if we did not use **-it** we cannot type any inputs and also cannot see any outputs from this container. (we was quit from that container automatically).
+
+---
+
+#### The purpose of IT Flag
+
+-> The command that we run inside the container has three channels that communicate with our terminal
+
+- STDIN -> Standard Input
+- STDOUT -> Standard Output
+- STDERR -> Standard Error
+
+-> **-i** flag is to specify that we wan to allow to input the command inside that container, for **-t** flag is just for nice output in the terminal (without -t we can still input the command)
+
+```dockerfile
+docker exec -it 2a831abcb38c redis-cli
+docker exec -i -t 2a831abcb38c redis-cli //same as above command, just seperate the flag
+docker exec -i 2a831abcb38c //we can still input, but output is not nicely
+```
+
+---
+
+#### Getting a command prompt in a container
+
+-> Since using **docker exec** command everytime that we would like to excecute command is a waste of time, so we can get a command by using command **sh**
+
+```dockerfile
+docker exec -it 2a831abcb38c sh //we get command prompt in a container
+cd /
+ls
+redis-cli //run redis-cli inside the container
+```
+
+---
+
+#### Command Processors
+
+-> Program that allow us to execute command.
+
+- bash
+- powershell
+- zsh
+- sh
+
+```dockerfile
+docker run -it busybox sh
+```
+
+---
+
+#### Docker Isolation
+
+-> Please note that when we run two containers, these two containers are separate completely, so the file system did not shared to each other.
+
+```dockerfile
+docker run -it busybox
+docker run -it busybox
+//these two containers are separate
+```
+
+---
+
+
 
