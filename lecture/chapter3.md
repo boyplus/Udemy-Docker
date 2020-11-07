@@ -25,8 +25,10 @@ In order to create an docker image, we have to write the docker file (text file)
 # Dockerfile
 # Use an existing image as a base
 FROM alpine
-# Download and install container
+
+# Download and install dependency
 RUN apk add --update redis
+
 # Tell the image what to do when it starts as a container
 CMD ["redis-server"]
 ```
@@ -88,7 +90,7 @@ docker build .
 
 >  look to the previous image, create the container, and set the primary command. After that it remove the temporary container and create an new image that already has primary command when container start for us.
 
-**Summary**
+**Recap the flow of build image**
 
 - Download alpine image (base image)
 - **RUN apk add --update redis**
@@ -106,3 +108,72 @@ docker build .
 - Get image ready for next instruction
 
 Output is the image generated from previous step.
+
+---
+
+#### Rebuild with cache
+
+```dockerfile
+# Dockerfile
+# Use an existing image as a base
+FROM alpine
+
+# Download and install dependencies
+RUN apk add --update redis
+# Add more dependencies
+RUN apk add --update gcc
+
+# Tell the image what to do when it starts as a container
+CMD ["redis-server"]
+```
+
+-> when we already install image (base image), dependencies (RUN apk add --update redis), docker will use the cache for us. That means, we can build image faster.
+
+Please note that the order of installing dependencies is matters, that means if we install gcc before install redis, docker will not use cache anymore, but it will install gcc and redis respectively.
+
+---
+
+#### Tagging and image
+
+```dockerfile
+docker build -t boy78111947/redis:latest .
+```
+
+- boy78111947 -> your docker ID
+- /redis -> repo/project name
+- latest -> version of image (can be number)
+- . -> build context (do not forget the build context)
+
+```dockerfile
+docker run boy78111947/redis:latest
+docker run boy78111947/redis
+```
+
+> If we did not specify the version of image, docker will use the latest of that image.
+
+---
+
+#### Docker Image generation with docker commit
+
+-> In facts, we can create the image from the container like docker server do when we build the dockerfile behind the scene for us.
+
+-> We did not do somethings like this often just let you to know that we can do like this.
+
+```dockerfile
+docker run -it alpine sh //create a container with alpine as a base image
+apk add --update redis //install redis inside that container
+
+# Open another terminal and get ID of the above container (docker ps)
+docker ps
+docker commit -c 'CMD ["redis-srever"]' 23d50e30b188 //set up the primary commadn when container start, id is the previous container id
+
+# We will get the id of new image with base image of alpine and dependencie redis and start command 'redis-server' inside that image
+docker run 8574fcd5de418fbe44 //if from last step
+```
+
+
+
+---
+
+
+
