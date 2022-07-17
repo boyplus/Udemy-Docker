@@ -18,6 +18,12 @@ docker run hello-world
 
 Image hello-world, the FS Snapshot is hello-world and startup command is "Run hello-world".
 
+![docker-run](./images/diagrams-02 - scratch.drawio.png)
+
+
+
+Rememner that when we run docker, we do not get only the file snapshot, we also get default run command. And we can override it.
+
 ```dockerfile
 docker run <image name> <command>
 ```
@@ -29,6 +35,14 @@ docker run busybox ls
 ```
 
 > The default command was override to be **ls** (we don't know the default command) so it will list all directory in busybox snapshot which is bin, dev, etc, home, proc, root.
+
+```dockerfile
+docker run busybox echo hi there
+```
+
+
+
+***Note:** we can only run the command that is exist on that container. The reasons that we can run `ls` command on busybox is that on that FS snapshot it has the `ls` executable command. But not for `hello-world` container that contains only one single file that print some message the console.
 
 ---
 
